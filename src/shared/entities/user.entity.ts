@@ -11,7 +11,7 @@ import {
 @Entity('Users')
 export class UserEntity {
   @PrimaryGeneratedColumn()
-  id: number;
+  id?: number;
 
   @Column('varchar', {
     length: 255,
@@ -36,12 +36,13 @@ export class UserEntity {
     nullable: false,
   })
   email: string;
+
   @CreateDateColumn()
-  createdAt: Timestamp;
+  createdAt?: Timestamp;
 
   @UpdateDateColumn()
-  updatedAt: Timestamp;
+  updatedAt?: Timestamp;
 
   @DeleteDateColumn()
-  deletedAt: Timestamp;
+  deletedAt?: Timestamp;
 }
