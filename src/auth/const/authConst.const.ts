@@ -1,4 +1,4 @@
 export interface generateTokensInterface {
-  userId: number;
+  id: number;
   email: string;
 }

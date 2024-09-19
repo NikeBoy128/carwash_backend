@@ -31,7 +31,7 @@ export class AuthUseCae {
     }
 
     const token = await this.authService.generateTokens({
-      userId: user.id,
+      id: user.id,
       email: user.email,
     });
 
