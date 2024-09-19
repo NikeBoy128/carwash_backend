@@ -7,8 +7,13 @@ import { UserSharedRepository } from 'src/shared/repositories/userRepository.rep
 import { PasswordService } from 'src/auth/services/password.service';
 
 @Module({
-  providers: [CrudUsersService,crudUserUseCase,UserSharedRepository,PasswordService],
+  providers: [
+    CrudUsersService,
+    crudUserUseCase,
+    UserSharedRepository,
+    PasswordService,
+  ],
   controllers: [UserController],
-  imports:[SharedModule.forRoot()],
+  imports: [SharedModule.forRoot()],
 })
 export class UsersModule {}
