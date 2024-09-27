@@ -18,7 +18,7 @@ export class AuthUseCae {
     });
 
     if (!user) {
-      throw new HttpException('User not found', 404);
+      throw new HttpException('Usuario no encontrado', 404);
     }
 
     const verifyPassword = await this.passwordService.compare(
@@ -27,7 +27,7 @@ export class AuthUseCae {
     );
 
     if (!verifyPassword) {
-      throw new HttpException('Password Incorrect', 500);
+      throw new HttpException('Email o contraseña incorrecto', 500);
     }
 
     const token = await this.authService.generateTokens({

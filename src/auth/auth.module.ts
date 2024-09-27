@@ -8,9 +8,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/shared/entities/user.entity';
 import { PasswordService } from './services/password.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { RefreshTokenUseCase } from './useCase/refreshTokenUseCase';
 
 @Module({
-  providers: [AuthService, AuthUseCae, PasswordService],
+  providers: [AuthService, AuthUseCae, PasswordService, RefreshTokenUseCase],
   controllers: [AuthController],
   imports: [
     TypeOrmModule.forFeature([UserEntity]),

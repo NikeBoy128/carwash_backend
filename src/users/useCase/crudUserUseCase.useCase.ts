@@ -5,7 +5,7 @@ import { UserEntity } from 'src/shared/entities/user.entity';
 import { PasswordService } from 'src/auth/services/password.service';
 
 @Injectable()
-export class crudUserUseCase {
+export class CrudUserUseCase {
   constructor(
     private readonly crudUserService: CrudUsersService,
     private readonly passwordService: PasswordService,

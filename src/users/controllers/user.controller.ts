@@ -1,14 +1,27 @@
-import { Body, Controller, HttpStatus, Post } from '@nestjs/common';
-import { crudUserUseCase } from '../useCase/crudUserUseCase.useCase';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { CrudUserUseCase } from '../useCase/crudUserUseCase.useCase';
 import { CreateOrUpdateUserDto } from '../dto/user.dto';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreatedResponse } from 'src/shared/dto/response.dto';
 import { CREATED_MESSAGE } from 'src/shared/const/response.conts';
+import { AuthGuard } from 'src/shared/guards/auth.guard';
+import { InitDataUseCase } from '../useCase/initDataUseCase.UseCase';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-  constructor(private readonly userCase: crudUserUseCase) {}
+  constructor(
+    private readonly userCase: CrudUserUseCase,
+    private readonly initDataUseCase: InitDataUseCase,
+  ) {}
   @Post('/create')
   @ApiOkResponse({ type: CreatedResponse })
   async create(
@@ -21,5 +34,14 @@ export class UserController {
       id: user,
       statusCode: HttpStatus.CREATED,
     };
+  }
+
+  @Get('/init-data')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  async initData(@Req() req) {
+    const userId = req.user.id;
+    const data = await this.initDataUseCase.initData(userId);
+    return data;
   }
 }

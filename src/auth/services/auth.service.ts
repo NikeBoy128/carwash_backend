@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { generateTokensInterface } from '../const/authConst.const';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {

@@ -2,6 +2,7 @@ import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserSharedRepository } from './repositories/userRepository.repository';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({})
 export class SharedModule {
@@ -26,6 +27,19 @@ export class SharedModule {
             entities: [__dirname + '/../**/*.entity.{js,ts}'],
             synchronize: false,
           }),
+          inject: [ConfigService],
+        }),
+
+        JwtModule.registerAsync({
+          imports: [ConfigModule],
+
+          useFactory: async (configService: ConfigService) => {
+            return {
+              secret: configService.get('JWT_SECRET'),
+              signOptions: { expiresIn: configService.get('JWT_EXPIRES_IN') },
+            };
+          },
+
           inject: [ConfigService],
         }),
       ],

@@ -14,3 +14,11 @@ export class AuthDto {
   })
   password: string;
 }
+
+export class RefreshTokenDto {
+  @ApiProperty({
+    type: String,
+    required: true,
+  })
+  accesToken: string;
+}
