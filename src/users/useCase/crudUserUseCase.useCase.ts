@@ -21,4 +21,27 @@ export class crudUserUseCase {
     const createUser = await this.crudUserService.create(user);
     return createUser;
   }
+
+  async getAllUsers(): Promise<UserEntity[]> {
+    const users = await this.crudUserService.getAllUsers();
+    return users;
+  }
+  /*
+  async update(id: number, userDto: CreateOrUpdateUserDto): Promise<number> {
+    const passwordHash = await this.passwordService.hash(userDto.password);
+    const user: UserEntity = {
+      name: userDto.name,
+      lastName: userDto.lastName,
+      email: userDto.email,
+      password: passwordHash,
+    };
+    const updateUser = await this.crudUserService.update(id, user);
+    return updateUser;
+  }
+    async findOne(id): Promise<UserEntity> {
+    return await this.crudUserService.findOne(id);
+  }*/
+  async delete(id: number): Promise<void> {
+    await this.crudUserService.delete(id);
+  }
 }
