@@ -5,29 +5,41 @@ import {
   Get,
   HttpStatus,
   Param,
+  Patch,
   Post,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
-import { crudUserUseCase } from '../useCase/crudUserUseCase.useCase';
+import { CrudUserUseCase } from '../useCase/crudUserUseCase.useCase';
 import { CreateOrUpdateUserDto } from '../dto/user.dto';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { CreatedResponse } from 'src/shared/dto/response.dto';
+import {
+  CreatedResponse,
+  DeletedResponse,
+  UpdatedResponse,
+} from 'src/shared/dto/response.dto';
 import {
   CREATED_MESSAGE,
-  //UPDATED_MESSAGE,
+  DELETED_MESSAGE,
+  UPDATED_MESSAGE,
 } from 'src/shared/const/response.conts';
+import { AuthGuard } from 'src/shared/guards/auth.guard';
+import { InitDataUseCase } from '../useCase/initDataUseCase.UseCase';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-  CrudUsersService: any;
-  constructor(private readonly userCase: crudUserUseCase) {}
+  constructor(
+    private readonly crudUserCase: CrudUserUseCase,
+    private readonly initDataUseCase: InitDataUseCase,
+  ) {}
   @Post('/create')
   @ApiOkResponse({ type: CreatedResponse })
   async create(
     @Body()
     userdto: CreateOrUpdateUserDto,
   ): Promise<CreatedResponse> {
-    const user = await this.userCase.create(userdto);
+    const user = await this.crudUserCase.create(userdto);
     return {
       message: CREATED_MESSAGE,
       id: user,
@@ -43,40 +55,31 @@ export class UserController {
     const data = await this.initDataUseCase.initData(userId);
     return data;
   }
-  @Get('/')
-  @ApiOkResponse({ description: 'Obtiene todos los usuarios' })
-  async getAllUsers() {
-    const users = await this.userCase.getAllUsers();
-    return users;
-  }
-  @Delete('/:id')
-  @ApiOkResponse({ description: 'Usuario eliminado correctamente' })
-  public async delete(@Param('id') id: number): Promise<void> {
-    await this.userCase.delete(id);
-  }
 
-  /*
-  @Get('/:id')
-  public async findOne(@Param('id') id: number): Promise<UserEntity> {
-    return await this.userCase.findOne(id);
-  }
-  @Patch('/:id')
-  @ApiParam({
-    name: 'id',
-    type: Number,
-    description: 'ID del usuario a actualizar',
-  })
-  @ApiOkResponse({ type: CreatedResponse })
-  async updateUser(
-    @Param('id') id: number,
-    @Body()
-    userdto: CreateOrUpdateUserDto,
-  ): Promise<CreatedResponse> {
-    const user = await this.userCase.update(id, userdto);
+  @Patch('/update')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiOkResponse({ type: UpdatedResponse })
+  async update(
+    @Body() userDto: CreateOrUpdateUserDto,
+  ): Promise<UpdatedResponse> {
+    await this.crudUserCase.update(userDto);
+
     return {
       message: UPDATED_MESSAGE,
-      id: user,
       statusCode: HttpStatus.OK,
     };
-  }*/
+  }
+
+  @Delete('/:id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiOkResponse({ type: DeletedResponse })
+  async delete(@Param('id') id: number): Promise<DeletedResponse> {
+    await this.crudUserCase.delete(id);
+    return {
+      message: DELETED_MESSAGE,
+      statusCode: HttpStatus.OK,
+    };
+  }
 }

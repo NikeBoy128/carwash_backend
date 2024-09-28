@@ -33,10 +33,18 @@ export class UpdatedResponse {
 
   @ApiProperty({
     type: Number,
-    description: '1',
+    example: 200,
+  })
+  statusCode: number;
+}
+
+export class DeletedResponse {
+  @ApiProperty({
+    type: String,
+    description: 'Deleted',
     required: false,
   })
-  id: number;
+  message: string;
 
   @ApiProperty({
     type: Number,

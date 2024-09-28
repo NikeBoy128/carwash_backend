@@ -27,9 +27,9 @@ export class UserEntity {
 
   @Column('varchar', {
     length: 255,
-    nullable: false,
+    nullable: true,
   })
-  password: string;
+  password?: string;
 
   @Column('varchar', {
     length: 255,

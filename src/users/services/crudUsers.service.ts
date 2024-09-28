@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserEntity } from 'src/shared/entities/user.entity';
 import { UserSharedRepository } from 'src/shared/repositories/userRepository.repository';
 
@@ -13,16 +13,25 @@ export class CrudUsersService {
     const users = await this.userRepository.find();
     return users;
   }
-  /*
-  async update(id: number, user: UserEntity): Promise<number> {
-    await this.userRepository.update(user.id, user);
-    return user.id;
 
+  async update(user: UserEntity) {
+    const userExist = await this.userRepository.findOne({
+      where: { id: user.id },
+    });
+
+    if (!userExist) {
+      throw new HttpException('Usuario no encontrado', HttpStatus.BAD_REQUEST);
+    }
+    await this.userRepository.update(user.id, user);
   }
-    async findOne(id): Promise<UserEntity> {
-    return await this.userRepository.findOne(id);
-  }*/
-  async delete(id: number): Promise<void> {
-    await this.userRepository.delete(id);
+
+  async delete(id: number) {
+    const userExist = await this.userRepository.findOne({
+      where: { id },
+    });
+    if (!userExist) {
+      throw new HttpException('Usuario no encontrado', HttpStatus.BAD_REQUEST);
+    }
+    await this.userRepository.softDelete(id);
   }
 }
