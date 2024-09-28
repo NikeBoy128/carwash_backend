@@ -9,4 +9,20 @@ export class CrudUsersService {
     const userCreated = await this.userRepository.save(user);
     return userCreated.id;
   }
+  async getAllUsers(): Promise<UserEntity[]> {
+    const users = await this.userRepository.find();
+    return users;
+  }
+  /*
+  async update(id: number, user: UserEntity): Promise<number> {
+    await this.userRepository.update(user.id, user);
+    return user.id;
+
+  }
+    async findOne(id): Promise<UserEntity> {
+    return await this.userRepository.findOne(id);
+  }*/
+  async delete(id: number): Promise<void> {
+    await this.userRepository.delete(id);
+  }
 }
