@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString } from 'class-validator';
+import { IsArray, IsOptional, IsString } from 'class-validator';
 
 export class CreateOrUpdateUserDto {
   @ApiProperty({
@@ -23,6 +23,7 @@ export class CreateOrUpdateUserDto {
     nullable: false,
     required: true,
   })
+  @IsString()
   lastName: string;
 
   @ApiProperty({
@@ -41,4 +42,13 @@ export class CreateOrUpdateUserDto {
   })
   @IsString()
   email: string;
+
+  @ApiProperty({
+    type: Array,
+    nullable: false,
+    required: true,
+    example: [1, 2, 3],
+  })
+  @IsArray()
+  roles: number[];
 }

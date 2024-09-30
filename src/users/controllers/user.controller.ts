@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -25,6 +26,8 @@ import {
 } from 'src/shared/const/response.conts';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { InitDataUseCase } from '../useCase/initDataUseCase.UseCase';
+import { GetAllUsersPaginatedUseCase } from '../useCase/getAllUsersPaginatedUseCase.useCase';
+import { PaginateQueryRaw } from 'src/shared/interfaces/paginated';
 
 @ApiTags('user')
 @Controller('user')
@@ -32,6 +35,7 @@ export class UserController {
   constructor(
     private readonly crudUserCase: CrudUserUseCase,
     private readonly initDataUseCase: InitDataUseCase,
+    private readonly getAllUsersPaginatedUseCase: GetAllUsersPaginatedUseCase,
   ) {}
   @Post('/create')
   @ApiOkResponse({ type: CreatedResponse })
@@ -81,5 +85,12 @@ export class UserController {
       message: DELETED_MESSAGE,
       statusCode: HttpStatus.OK,
     };
+  }
+
+  @Get('/whit-pagination')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  async getAllPagination(@Query() params: PaginateQueryRaw) {
+    return await this.getAllUsersPaginatedUseCase.getAllUsersPaginated(params);
   }
 }
