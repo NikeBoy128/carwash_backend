@@ -50,11 +50,6 @@ export class CrudUserUseCase {
     await this.crudRolesUserService.create(rolesUser);
   }
 
-  async getAllUsers(): Promise<UserEntity[]> {
-    const users = await this.crudUserService.getAllUsers();
-    return users;
-  }
-
   async delete(id: number): Promise<void> {
     await this.crudUserService.delete(id);
   }

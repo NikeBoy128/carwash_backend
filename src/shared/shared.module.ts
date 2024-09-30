@@ -3,14 +3,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserSharedRepository } from './repositories/userRepository.repository';
 import { JwtModule } from '@nestjs/jwt';
+import { PaginatedService } from './services/paginated.service';
 
-@Module({})
+@Module({
+  providers: [PaginatedService],
+})
 export class SharedModule {
   static forRoot(): DynamicModule {
     return {
       module: SharedModule,
       providers: [UserSharedRepository],
-      exports: [UserSharedRepository],
+      exports: [UserSharedRepository, PaginatedService],
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,

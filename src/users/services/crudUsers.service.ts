@@ -9,10 +9,6 @@ export class CrudUsersService {
     const userCreated = await this.userRepository.save(user);
     return userCreated.id;
   }
-  async getAllUsers(): Promise<UserEntity[]> {
-    const users = await this.userRepository.find();
-    return users;
-  }
 
   async update(user: UserEntity) {
     const userExist = await this.userRepository.findOne({
