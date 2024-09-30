@@ -28,5 +28,6 @@ module.exports = {
         format: ['PascalCase'],
       },
     ],
+    'no-console': ['error', { allow: ['warn', 'error'] }],
   },
 };
