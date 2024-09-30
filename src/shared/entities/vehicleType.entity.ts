@@ -3,10 +3,12 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
+import { ConceptTypeVehiculeEntity } from './conceptTypeVehicules.entity';
 
 @Entity('VehicleType')
 export class VehicleType {
@@ -33,4 +35,10 @@ export class VehicleType {
 
   @DeleteDateColumn()
   deletedAt?: Timestamp;
+
+  @OneToMany(
+    () => ConceptTypeVehiculeEntity,
+    (conceptTypeVehicule) => conceptTypeVehicule.vehicleType,
+  )
+  conceptTypeVehicule?: ConceptTypeVehiculeEntity[];
 }
