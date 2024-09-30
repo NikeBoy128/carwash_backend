@@ -7,6 +7,8 @@ import { UserSharedRepository } from 'src/shared/repositories/userRepository.rep
 import { PasswordService } from 'src/auth/services/password.service';
 import { InitDataUseCase } from './useCase/initDataUseCase.UseCase';
 import { JwtService } from '@nestjs/jwt';
+import { CrudRolesUserService } from './services/crudRolesUser.service';
+import { RolesUserRepository } from './repositories/rolesUserRepository.repository';
 
 @Module({
   providers: [
@@ -16,6 +18,8 @@ import { JwtService } from '@nestjs/jwt';
     PasswordService,
     InitDataUseCase,
     JwtService,
+    CrudRolesUserService,
+    RolesUserRepository,
   ],
   controllers: [UserController],
   imports: [SharedModule.forRoot()],
