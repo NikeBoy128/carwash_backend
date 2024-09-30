@@ -10,8 +10,8 @@ import {
 } from 'typeorm';
 import { RolesUserEntity } from './rolesUser.entity';
 
-@Entity('Users')
-export class UserEntity {
+@Entity('Roles')
+export class RoleEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id?: number;
 
@@ -20,24 +20,6 @@ export class UserEntity {
     nullable: false,
   })
   name: string;
-
-  @Column('varchar', {
-    length: 255,
-    nullable: false,
-  })
-  lastName: string;
-
-  @Column('varchar', {
-    length: 255,
-    nullable: true,
-  })
-  password?: string;
-
-  @Column('varchar', {
-    length: 255,
-    nullable: false,
-  })
-  email: string;
 
   @CreateDateColumn()
   createdAt?: Timestamp;
@@ -48,6 +30,6 @@ export class UserEntity {
   @DeleteDateColumn()
   deletedAt?: Timestamp;
 
-  @OneToMany(() => RolesUserEntity, (rolesUser) => rolesUser.user)
+  @OneToMany(() => RolesUserEntity, (rolesUser) => rolesUser.role)
   rolesUser?: RolesUserEntity[];
 }
