@@ -12,7 +12,7 @@ import {
 import { ConceptsEntity } from './concepts.entity';
 import { VehicleType } from './vehicleType.entity';
 
-@Entity('RolesUser')
+@Entity('ConceptTypes')
 export class ConceptTypeVehiculeEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id?: number;
