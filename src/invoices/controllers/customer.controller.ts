@@ -8,8 +8,9 @@ import {
   Patch,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CrudCustomerUseCase } from '../userCase/crudCustomerUseCase.useCase';
 import { CreateOrUpdateCustomerDto } from '../dto/customer.dto';
 import {
@@ -24,6 +25,7 @@ import {
 } from 'src/shared/const/response.conts';
 import { PaginateQueryRaw } from 'src/shared/interfaces/paginated';
 import { GetAllCustomersPaginatedUseCase } from '../userCase/getAllCustomersPaginatedUseCase.useCase';
+import { AuthGuard } from 'src/shared/guards/auth.guard';
 
 @Controller('customer')
 @ApiTags('customer')
@@ -33,6 +35,8 @@ export class CustomerController {
     private readonly getAllCustomersPaginatedUseCase: GetAllCustomersPaginatedUseCase,
   ) {}
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Post('/create')
   @ApiOkResponse({ type: CreatedResponse })
   async create(
@@ -46,6 +50,9 @@ export class CustomerController {
       statusCode: HttpStatus.CREATED,
     };
   }
+
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Patch('/update')
   @ApiOkResponse({ type: UpdatedResponse })
   async update(
@@ -59,6 +66,8 @@ export class CustomerController {
     };
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Delete('/:id')
   @ApiOkResponse({ type: DeletedResponse })
   async delete(@Param('id') id: number): Promise<DeletedResponse> {
@@ -68,7 +77,8 @@ export class CustomerController {
       statusCode: HttpStatus.OK,
     };
   }
-
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Get('/whit-pagination')
   async getAllPagination(@Query() params: PaginateQueryRaw) {
     return await this.getAllCustomersPaginatedUseCase.getAllCustomersPaginated(
