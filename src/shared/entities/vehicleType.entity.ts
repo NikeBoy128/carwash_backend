@@ -9,9 +9,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ConceptTypeVehiculeEntity } from './conceptTypeVehicules.entity';
+import { InvoicesEntity } from './invoices.entity';
 
 @Entity('VehicleType')
-export class VehicleType {
+export class VehicleTypeEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id?: number;
 
@@ -41,4 +42,10 @@ export class VehicleType {
     (conceptTypeVehicule) => conceptTypeVehicule.vehicleType,
   )
   conceptTypeVehicule?: ConceptTypeVehiculeEntity[];
+
+  @OneToMany(
+    () => InvoicesEntity,
+    (TypeVehicule) => TypeVehicule.vehicleTypeInvoice,
+  )
+  vehicleTypeInvoice?: InvoicesEntity[];
 }

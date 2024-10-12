@@ -3,16 +3,15 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  OneToMany,
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
-import { RolesUserEntity } from './rolesUser.entity';
 import { InvoicesEntity } from './invoices.entity';
 
-@Entity('Users')
-export class UserEntity {
+@Entity('customers')
+export class CustomersEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id?: number;
 
@@ -27,18 +26,8 @@ export class UserEntity {
     nullable: false,
   })
   lastName: string;
-
-  @Column('varchar', {
-    length: 255,
-    nullable: true,
-  })
-  password?: string;
-
-  @Column('varchar', {
-    length: 255,
-    nullable: false,
-  })
-  email: string;
+  @Column({ type: 'bigint' })
+  phone: number;
 
   @CreateDateColumn()
   createdAt?: Timestamp;
@@ -49,15 +38,9 @@ export class UserEntity {
   @DeleteDateColumn()
   deletedAt?: Timestamp;
 
-  @OneToMany(() => RolesUserEntity, (rolesUser) => rolesUser.user)
-  rolesUser?: RolesUserEntity[];
-
-  @OneToMany(() => InvoicesEntity, (invoiceUser) => invoiceUser.user)
-  invoiceUser?: InvoicesEntity[];
-
   @OneToMany(
     () => InvoicesEntity,
-    (invoiceEmployee) => invoiceEmployee.employee,
+    (invoiceCustomer) => invoiceCustomer.customer,
   )
-  invoiceEmployee?: InvoicesEntity[];
+  invoiceCustomer?: InvoicesEntity[];
 }
