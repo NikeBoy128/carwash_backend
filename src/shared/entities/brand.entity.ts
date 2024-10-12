@@ -9,9 +9,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { InvoicesEntity } from './invoices.entity';
-
-@Entity('InvoicesStatus')
-export class InvoicesStatusEntity {
+@Entity('Brand')
+export class BrandEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id?: number;
 
@@ -19,19 +18,7 @@ export class InvoicesStatusEntity {
     length: 255,
     nullable: false,
   })
-  label: string;
-
-  @Column('varchar', {
-    length: 255,
-    nullable: false,
-  })
-  icon: string;
-
-  @Column('varchar', {
-    length: 255,
-    nullable: true,
-  })
-  code: string;
+  name: string;
 
   @CreateDateColumn()
   createdAt?: Timestamp;
@@ -42,6 +29,6 @@ export class InvoicesStatusEntity {
   @DeleteDateColumn()
   deletedAt?: Timestamp;
 
-  @OneToMany(() => InvoicesEntity, (invoiceStatus) => invoiceStatus.invoice)
-  invoice?: InvoicesEntity[];
+  @OneToMany(() => InvoicesEntity, (invoiceBrand) => invoiceBrand.brand)
+  invoiceBrand?: InvoicesEntity[];
 }

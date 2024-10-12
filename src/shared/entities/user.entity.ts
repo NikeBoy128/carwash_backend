@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { RolesUserEntity } from './rolesUser.entity';
+import { InvoicesEntity } from './invoices.entity';
 
 @Entity('Users')
 export class UserEntity {
@@ -50,4 +51,13 @@ export class UserEntity {
 
   @OneToMany(() => RolesUserEntity, (rolesUser) => rolesUser.user)
   rolesUser?: RolesUserEntity[];
+
+  @OneToMany(() => InvoicesEntity, (invoiceUser) => invoiceUser.user)
+  invoiceUser?: InvoicesEntity[];
+
+  @OneToMany(
+    () => InvoicesEntity,
+    (invoiceEmployee) => invoiceEmployee.employee,
+  )
+  invoiceEmployee?: InvoicesEntity[];
 }

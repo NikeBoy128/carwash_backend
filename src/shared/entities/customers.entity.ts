@@ -6,7 +6,13 @@ import {
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
+<<<<<<< HEAD
 } from 'typeorm';
+=======
+  OneToMany,
+} from 'typeorm';
+import { InvoicesEntity } from './invoices.entity';
+>>>>>>> 61261b911dbfde031939c08b06dcba3ede4ef7dc
 
 @Entity('customers')
 export class CustomersEntity {
@@ -36,9 +42,17 @@ export class CustomersEntity {
   @DeleteDateColumn()
   deletedAt?: Timestamp;
 
+<<<<<<< HEAD
   /*@OneToMany(
     () => InvoicesEntity,
     (invoiceCustomer) => invoiceCustomer.customer,
   )
   invoiceCustomer?: InvoicesEntity[];*/
+=======
+  @OneToMany(
+    () => InvoicesEntity,
+    (invoiceCustomer) => invoiceCustomer.customer,
+  )
+  invoiceCustomer?: InvoicesEntity[];
+>>>>>>> 61261b911dbfde031939c08b06dcba3ede4ef7dc
 }
