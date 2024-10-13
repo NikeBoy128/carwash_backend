@@ -6,6 +6,15 @@ import { UserSharedRepository } from 'src/shared/repositories/userRepository.rep
 export class CrudUsersService {
   constructor(private readonly userRepository: UserSharedRepository) {}
   async create(user: UserEntity): Promise<number> {
+    const findUserByemail = await this.userRepository.findOne({
+      where: { email: user.email },
+    });
+    if (findUserByemail) {
+      throw new HttpException(
+        'Correo electronico en uso',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     const userCreated = await this.userRepository.save(user);
     return userCreated.id;
   }
