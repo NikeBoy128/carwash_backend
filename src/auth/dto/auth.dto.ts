@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 
 export class AuthDto {
   @ApiProperty({
     type: String,
     required: true,
   })
+  @IsString()
   email: string;
 
   @ApiProperty({
@@ -20,5 +22,6 @@ export class RefreshTokenDto {
     type: String,
     required: true,
   })
+  @IsString()
   accesToken: string;
 }
