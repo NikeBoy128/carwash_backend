@@ -10,9 +10,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ConceptsEntity } from './concepts.entity';
-import { VehicleType } from './vehicleType.entity';
+import { VehicleTypeEntity } from './vehicleType.entity';
 
-@Entity('RolesUser')
+@Entity('ConceptTypes')
 export class ConceptTypeVehiculeEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id?: number;
@@ -44,9 +44,9 @@ export class ConceptTypeVehiculeEntity {
   concept?: ConceptsEntity;
 
   @ManyToOne(
-    () => VehicleType,
+    () => VehicleTypeEntity,
     (vehicleType) => vehicleType.conceptTypeVehicule,
   )
   @JoinColumn({ name: 'typeVehiculeId' })
-  vehicleType?: VehicleType;
+  vehicleType?: VehicleTypeEntity;
 }
