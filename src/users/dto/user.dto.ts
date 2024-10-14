@@ -8,7 +8,8 @@ export class CreateOrUpdateUserDto {
     required: false,
   })
   @IsNumber()
-  id: number;
+  @IsOptional()
+  id?: number;
 
   @ApiProperty({
     type: String,
