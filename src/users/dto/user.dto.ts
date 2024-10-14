@@ -51,5 +51,6 @@ export class CreateOrUpdateUserDto {
     example: [1, 2, 3],
   })
   @IsArray()
+  @IsOptional()
   roles: number[];
 }

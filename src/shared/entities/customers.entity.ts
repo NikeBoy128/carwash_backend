@@ -16,18 +16,18 @@ export class CustomersEntity {
   id?: number;
 
   @Column('varchar', {
-    length: 255,
+    length: 50,
     nullable: false,
   })
   name: string;
 
   @Column('varchar', {
-    length: 255,
+    length: 50,
     nullable: false,
   })
   lastName: string;
-  @Column({ type: 'bigint' })
-  phone: number;
+  @Column({ type: 'varchar', length: 20 })
+  phone: string;
 
   @CreateDateColumn()
   createdAt?: Timestamp;

@@ -21,13 +21,6 @@ export class ConceptsEntity {
   })
   description: string;
 
-  @Column('double', {
-    precision: 10,
-    scale: 2,
-    nullable: false,
-  })
-  value: number;
-
   @CreateDateColumn()
   createdAt?: Timestamp;
 
