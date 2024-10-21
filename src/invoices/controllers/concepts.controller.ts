@@ -65,6 +65,8 @@ export class ConceptsController {
     };
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Get('/whit-pagination')
   async getAllConceptsPaginated(@Query() params: PaginateQueryRaw) {
     return await this.getAllConceptsPaginatedUseCase.getAllConceptsPaginated(
