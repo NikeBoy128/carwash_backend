@@ -33,4 +33,17 @@ export class CrudConceptsUseCase {
 
     return conceptId;
   }
+
+  async update(conceptsDto: CreateOrUpdateConceptsDto) {
+    const concepts: ConceptsEntity = {
+      id: conceptsDto.id,
+      description: conceptsDto.description,
+    };
+
+    await this.crudConceptsService.update(concepts);
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.crudConceptsService.delete(id);
+  }
 }

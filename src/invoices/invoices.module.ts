@@ -15,10 +15,14 @@ import { ConceptsRepository } from './repositories/conceptsRepository.repositori
 import { ConceptTypeVehicleRepository } from './repositories/conceptTypeVehicleRepositorty.repository';
 import { GetAllConceptsService } from './services/getAllConcepts.service';
 import { GetAllConceptsPaginatedUseCase } from './userCase/getAllConceptsPaginatedUseCase.useCase';
+import { TypeVehiclesController } from './controllers/typeVehicle.controller';
+import { CrudTypeVehicleService } from './services/crudTypeVehicle.service';
+import { CrudTypeVehicleUseCase } from './userCase/crudTypeVehicleUseCase';
+import { TypeVehicleRepository } from './repositories/typeVehicleRepository.repositories';
 
 @Module({
   imports: [SharedModule.forRoot()],
-  controllers: [CustomerController, ConceptsController],
+  controllers: [CustomerController, ConceptsController, TypeVehiclesController],
   providers: [
     CrudCustomersService,
     CrudCustomerUseCase,
@@ -29,6 +33,9 @@ import { GetAllConceptsPaginatedUseCase } from './userCase/getAllConceptsPaginat
     CrudConceptsService,
     CrudConceptsTypeVehicleService,
     CrudConceptsUseCase,
+    CrudTypeVehicleService,
+    CrudTypeVehicleUseCase,
+    TypeVehicleRepository,
     ConceptsRepository,
     ConceptTypeVehicleRepository,
     GetAllConceptsService,

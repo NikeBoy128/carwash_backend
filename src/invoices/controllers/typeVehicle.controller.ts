@@ -2,16 +2,12 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
   HttpStatus,
   Param,
   Patch,
   Post,
-  Query,
   UseGuards,
 } from '@nestjs/common';
-import { CrudConceptsUseCase } from '../userCase/crudConceptsUseCase';
-import { CreateOrUpdateConceptsDto } from '../dto/concepts.dto';
 import {
   CreatedResponse,
   DeletedResponse,
@@ -24,14 +20,15 @@ import {
 } from 'src/shared/const/response.conts';
 import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
-import { PaginateQueryRaw } from 'src/shared/interfaces/paginated';
 import { GetAllConceptsPaginatedUseCase } from '../userCase/getAllConceptsPaginatedUseCase.useCase';
+import { CrudTypeVehicleUseCase } from '../userCase/crudTypeVehicleUseCase';
+import { CreateOrUpdateTypeVehiclesDto } from '../dto/typeVehicles.dto';
 
-@Controller('concepts')
-@ApiTags('concepts')
-export class ConceptsController {
+@Controller('typeVehicles')
+@ApiTags('typeVehicles')
+export class TypeVehiclesController {
   constructor(
-    private readonly crudConceptsUseCase: CrudConceptsUseCase,
+    private readonly crudTypeVehicleUseCase: CrudTypeVehicleUseCase,
     private readonly getAllConceptsPaginatedUseCase: GetAllConceptsPaginatedUseCase,
   ) {}
 
@@ -39,14 +36,15 @@ export class ConceptsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard)
   async create(
-    @Body() conceptsDto: CreateOrUpdateConceptsDto,
+    @Body() typevehicleDto: CreateOrUpdateTypeVehiclesDto,
   ): Promise<CreatedResponse> {
-    const conceptId = await this.crudConceptsUseCase.create(conceptsDto);
+    const typevehicleId =
+      await this.crudTypeVehicleUseCase.create(typevehicleDto);
 
     return {
       message: CREATED_MESSAGE,
       statusCode: HttpStatus.CREATED,
-      id: conceptId,
+      id: typevehicleId,
     };
   }
 
@@ -55,9 +53,9 @@ export class ConceptsController {
   @Patch('/update')
   @ApiOkResponse({ type: UpdatedResponse })
   async update(
-    @Body() conceptsDto: CreateOrUpdateConceptsDto,
+    @Body() typevehicleDto: CreateOrUpdateTypeVehiclesDto,
   ): Promise<UpdatedResponse> {
-    await this.crudConceptsUseCase.update(conceptsDto);
+    await this.crudTypeVehicleUseCase.update(typevehicleDto);
 
     return {
       message: UPDATED_MESSAGE,
@@ -65,17 +63,12 @@ export class ConceptsController {
     };
   }
 
-  @Get('/whit-pagination')
-  async getAllConceptsPaginated(@Query() params: PaginateQueryRaw) {
-    return await this.getAllConceptsPaginatedUseCase.getAllConceptsPaginated(
-      params,
-    );
-  }
-
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Delete('/:id')
   @ApiOkResponse({ type: DeletedResponse })
   async delete(@Param('id') id: number): Promise<DeletedResponse> {
-    await this.crudConceptsUseCase.delete(id);
+    await this.crudTypeVehicleUseCase.delete(id);
     return {
       message: DELETED_MESSAGE,
       statusCode: HttpStatus.OK,

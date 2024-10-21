@@ -16,6 +16,6 @@ export class CrudConceptsService {
   }
 
   async delete(id: number): Promise<void> {
-    await this.conceptsRepository.delete(id);
+    await this.conceptsRepository.softDelete(id);
   }
 }
