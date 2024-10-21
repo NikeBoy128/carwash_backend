@@ -46,4 +46,17 @@ export class CrudConceptsUseCase {
   async delete(id: number): Promise<void> {
     await this.crudConceptsService.delete(id);
   }
+
+  async updateConceptTyeVehicule(
+    conceptsTypeVehiculeDto: ConceptTypeVehiculeEntity,
+  ) {
+    const conceptTypeVehicule: ConceptTypeVehiculeEntity = {
+      id: conceptsTypeVehiculeDto.id,
+      value: conceptsTypeVehiculeDto.value,
+      typeVehiculeId: conceptsTypeVehiculeDto.typeVehiculeId,
+      conceptId: conceptsTypeVehiculeDto.conceptId,
+    };
+
+    await this.crudConceptTypeVehiculeService.update(conceptTypeVehicule);
+  }
 }

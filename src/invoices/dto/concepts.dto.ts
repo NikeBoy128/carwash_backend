@@ -27,6 +27,7 @@ export class CreateOrUpdateConceptsDto {
     required: true,
   })
   @IsArray()
+  @IsOptional()
   @Type(() => CreateOrUpdateConceptTypeVehicle)
   conceptTypeVehicule: CreateOrUpdateConceptTypeVehicle[];
 }
