@@ -2,10 +2,12 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   HttpStatus,
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -18,9 +20,13 @@ import {
   DELETED_MESSAGE,
   UPDATED_MESSAGE,
 } from 'src/shared/const/response.conts';
-import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
-import { GetAllConceptsPaginatedUseCase } from '../userCase/getAllConceptsPaginatedUseCase.useCase';
 import { CrudTypeVehicleUseCase } from '../userCase/crudTypeVehicleUseCase';
 import { CreateOrUpdateTypeVehiclesDto } from '../dto/typeVehicles.dto';
 
@@ -29,7 +35,6 @@ import { CreateOrUpdateTypeVehiclesDto } from '../dto/typeVehicles.dto';
 export class TypeVehiclesController {
   constructor(
     private readonly crudTypeVehicleUseCase: CrudTypeVehicleUseCase,
-    private readonly getAllConceptsPaginatedUseCase: GetAllConceptsPaginatedUseCase,
   ) {}
 
   @Post('/')
@@ -73,5 +78,13 @@ export class TypeVehiclesController {
       message: DELETED_MESSAGE,
       statusCode: HttpStatus.OK,
     };
+  }
+
+  @Get('/')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  @ApiQuery({ name: 'search', required: false })
+  async getAll(@Query('search') search?: string) {
+    return await this.crudTypeVehicleUseCase.getAll(search);
   }
 }

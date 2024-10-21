@@ -31,4 +31,8 @@ export class CrudTypeVehicleUseCase {
   async delete(id: number): Promise<void> {
     await this.crudTypeVehicleService.delete(id);
   }
+
+  async getAll(search?: string) {
+    return await this.crudTypeVehicleService.getAll(search);
+  }
 }

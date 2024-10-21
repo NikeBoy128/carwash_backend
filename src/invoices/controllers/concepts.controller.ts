@@ -26,6 +26,7 @@ import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
 import { PaginateQueryRaw } from 'src/shared/interfaces/paginated';
 import { GetAllConceptsPaginatedUseCase } from '../userCase/getAllConceptsPaginatedUseCase.useCase';
+import { CreateOrUpdateConceptTypeVehicle } from '../dto/conceptypevehicle.dto';
 
 @Controller('concepts')
 @ApiTags('concepts')
@@ -80,6 +81,22 @@ export class ConceptsController {
     await this.crudConceptsUseCase.delete(id);
     return {
       message: DELETED_MESSAGE,
+      statusCode: HttpStatus.OK,
+    };
+  }
+
+  @Patch('/update-concept-type-vehicule')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  async updateConceptTypeVehicule(
+    @Body() conceptsTypeVehiculeDto: CreateOrUpdateConceptTypeVehicle,
+  ): Promise<UpdatedResponse> {
+    await this.crudConceptsUseCase.updateConceptTyeVehicule(
+      conceptsTypeVehiculeDto,
+    );
+
+    return {
+      message: UPDATED_MESSAGE,
       statusCode: HttpStatus.OK,
     };
   }

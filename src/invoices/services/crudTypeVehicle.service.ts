@@ -18,4 +18,15 @@ export class CrudTypeVehicleService {
   async delete(id: number): Promise<void> {
     await this.typeVehicleRepository.softDelete(id);
   }
+
+  async getAll(search?: string) {
+    const query = this.typeVehicleRepository
+      .createQueryBuilder('typeVehicle')
+      .limit(3);
+    if (search) {
+      query.where('typeVehicle.name LIKE :search', { search: `%${search}%` });
+    }
+
+    return await query.getMany();
+  }
 }
