@@ -24,7 +24,7 @@ export class CrudTypeVehicleService {
       .createQueryBuilder('typeVehicle')
       .limit(3);
     if (search) {
-      query.where('typeVehicle.name LIKE :search', { search: `%${search}%` });
+      query.where('typeVehicle.label LIKE :search', { search: `%${search}%` });
     }
 
     return await query.getMany();

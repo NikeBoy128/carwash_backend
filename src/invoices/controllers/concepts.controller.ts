@@ -75,6 +75,8 @@ export class ConceptsController {
     );
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
   @Delete('/:id')
   @ApiOkResponse({ type: DeletedResponse })
   async delete(@Param('id') id: number): Promise<DeletedResponse> {
